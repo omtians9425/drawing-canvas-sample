@@ -64,7 +64,7 @@ class MyCanvasView(context: Context) : View(context) {
         motionTouchEventX = event.x
         motionTouchEventY = event.y
 
-        when(event.action) {
+        when (event.action) {
             MotionEvent.ACTION_DOWN -> touchStart()
             MotionEvent.ACTION_MOVE -> touchMove()
             MotionEvent.ACTION_UP -> touchUp()
@@ -85,7 +85,12 @@ class MyCanvasView(context: Context) : View(context) {
 
         // If the movement was further than the touch tolerance, add a segment to the path.
         if (dx >= touchTolerance || dy >= touchTolerance) {
-            path.lineTo((motionTouchEventX + currentX) / 2, (motionTouchEventY + currentY) / 2)
+            path.quadTo(
+                currentX,
+                currentY,
+                (motionTouchEventX + currentX) / 2,
+                (motionTouchEventY + currentY) / 2
+            )
             currentX = motionTouchEventX
             currentY = motionTouchEventY
             extraCanvas.drawPath(path, paint)
